@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>VR Museum</title>
+        <meta name="description" content="A simple VR museum experience">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html,
+            body {
+              overflow: hidden;
+              width: 100%;
+              height: 100%;
+              margin: 0;
+              padding: 0;
+            }
+      
+            #renderCanvas {
+              width: 100%;
+              height: 100%;
+              touch-action: none;
+            }
+        </style>
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <canvas id="renderCanvas" touch-action="none"></canvas>
+        <script src="./src/index.js" async defer></script>
+    </body>
+</html>
