@@ -16,6 +16,10 @@ export default class Room {
         this.preparePortalChecks();
     }
 
+    render() {
+        this.scene.render();
+    }
+
     prepareCameraIntersectionMesh() {
         // Get scene's active camera
         const activeCam = this.scene.activeCamera;
@@ -31,9 +35,11 @@ export default class Room {
     preparePortalChecks() {
         this.scene.onBeforeRenderObservable.add(() => {
             for (let portalMesh of this.portalMeshes) {
-                if (this.boundingMesh.intersectsMesh(portalMesh)) {
+                // if (this.boundingMesh.intersectsMesh(portalMesh)) {
+                if (portalMesh.intersectsPoint(this.scene.activeCamera.position)) {
                     // Change active scene
-                    this.roomManager.setActiveScene(portalMesh.metadata.connectedRoom);
+                    console.log('change active scene');
+                    this.roomManager.setActiveRoom(portalMesh.metadata.connectedRoom);
                 }
             }
         });
@@ -49,7 +55,7 @@ export default class Room {
         const portalMesh = BABYLON.MeshBuilder.CreateBox("portal", {width: 3, height: 4, depth: 1}, this.scene);
         portalMesh.position = position;
         
-        portalMesh.metadata.connectedRoom = connectedRoom;
+        portalMesh.metadata = {connectedRoom};
         this.portalMeshes.push(portalMesh);
     }
 }

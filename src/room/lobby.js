@@ -4,10 +4,6 @@
 import Room from '../room.js';
 
 export default class Lobby extends Room {
-    constructor(engine, canvas) {
-        super(engine, canvas);
-    }
-
     createScene(engine, canvas) {
         // This creates a basic Babylon Scene object (non-mesh)
         var scene = new BABYLON.Scene(engine);

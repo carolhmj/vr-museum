@@ -4,10 +4,6 @@
 import Room from '../room.js';
 
 export default class Room1 extends Room {
-    constructor(engine, canvas) {
-        super(engine, canvas);
-    }
-
     createScene(engine, canvas) {
         var scene = new BABYLON.Scene(engine);
         var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2,  Math.PI / 4, 5, BABYLON.Vector3.Zero(), scene);

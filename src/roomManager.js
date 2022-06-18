@@ -6,21 +6,26 @@
 import Lobby from './room/lobby.js';
 import Room1 from './room/room1.js';
 
-class RoomManager {
+export default class RoomManager {
     constructor(engine, canvas) {
         this.engine = engine;
         this.canvas = canvas;
         
-        const lobby = new Lobby(engine, canvas);
-        const room1 = new Room1(engine, canvas);
+        const lobby = new Lobby(engine, canvas, this);
+        const room1 = new Room1(engine, canvas, this);
 
-        lobby.addConnection(room1, new BABYLON.Vector3(5, 3, 5));
+        lobby.addConnection(room1, new BABYLON.Vector3(10, 0, 10));
 
         this.activeRoom = lobby;
-        this.start();
+    }
+
+    setActiveRoom(room) {
+        this.activeRoom = room;
     }
 
     start() {
-
+        this.engine.runRenderLoop(() => {
+            this.activeRoom.render();
+        })
     }
 }
