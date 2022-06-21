@@ -47,15 +47,21 @@ export default class Room {
 
     /**
      * Add a portal between two scenes, making it that when the camera approaches
-     * the portal, it is transported to the connection point
+     * the portal, it is transported to the connection point.
+     * I'm just reimporting the portal mesh every time we want to add a connection,
+     * but this isn't the most efficient approach.
      * @param {*} connectedRoom the room that is connected to it
      * @param {*} position the position of the portal in the current room
      */
     addConnection(connectedRoom, position) {
-        const portalMesh = BABYLON.MeshBuilder.CreateBox("portal", {width: 3, height: 4, depth: 1}, this.scene);
-        portalMesh.position = position;
+        //const portalMesh = BABYLON.MeshBuilder.CreateBox("portal", {width: 3, height: 4, depth: 1}, this.scene);
         
-        portalMesh.metadata = {connectedRoom};
-        this.portalMeshes.push(portalMesh);
+        BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/carolhmj/quick-demos/main/assets/", "door_03.obj", this.scene, (meshes) => {
+            const portalMesh = meshes[0];
+            portalMesh.position = position;
+            
+            portalMesh.metadata = {connectedRoom};
+            this.portalMeshes.push(portalMesh);
+        });
     }
 }
