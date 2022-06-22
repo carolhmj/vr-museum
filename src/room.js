@@ -62,6 +62,13 @@ export default class Room {
             
             portalMesh.metadata = {connectedRoom};
             this.portalMeshes.push(portalMesh);
+
+            if (this.scene.metadata?.environmentHelper) {
+                this.scene.metadata.environmentHelper.groundMirrorRenderList.push(portalMesh);
+            }
+            if (this.scene.metadata?.shadowGenerator) {
+                this.scene.metadata.shadowGenerator.addShadowCaster(portalMesh);
+            }
         });
     }
 }
