@@ -60,12 +60,17 @@ export default class Room {
             const portalMesh = meshes[0];
             portalMesh.position = position;
             
+            const portalMaterial = new BABYLON.PBRMaterial("portalMaterial", this.scene);
+            portalMaterial.albedoTexture = new BABYLON.Texture("../../assets/textures/materials/wood_cabinet_worn_long_diff_2k.jpg", this.scene);
+            portalMaterial.bumpTexture = new BABYLON.Texture("../../assets/textures/materials/wood_cabinet_worn_long_nor_gl_2k.png", this.scene);
+            portalMaterial.metallicTexture = new BABYLON.Texture("../../assets/textures/materials/wood_cabinet_worn_long_rough_2k.png", this.scene);
+            portalMesh.material = portalMaterial;
+            portalMesh.material.roughness = 0.95;
+            portalMesh.material.metallic = 0.01;
+            
             portalMesh.metadata = {connectedRoom};
             this.portalMeshes.push(portalMesh);
 
-            if (this.scene.metadata?.environmentHelper) {
-                this.scene.metadata.environmentHelper.groundMirrorRenderList.push(portalMesh);
-            }
             if (this.scene.metadata?.shadowGenerator) {
                 this.scene.metadata.shadowGenerator.addShadowCaster(portalMesh);
             }
