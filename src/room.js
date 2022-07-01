@@ -61,9 +61,9 @@ export default class Room {
             portalMesh.position = position;
             
             const portalMaterial = new BABYLON.PBRMaterial("portalMaterial", this.scene);
-            portalMaterial.albedoTexture = new BABYLON.Texture("../../assets/textures/materials/wood_cabinet_worn_long_diff_2k.jpg", this.scene);
-            portalMaterial.bumpTexture = new BABYLON.Texture("../../assets/textures/materials/wood_cabinet_worn_long_nor_gl_2k.png", this.scene);
-            portalMaterial.metallicTexture = new BABYLON.Texture("../../assets/textures/materials/wood_cabinet_worn_long_rough_2k.png", this.scene);
+            portalMaterial.albedoTexture = new BABYLON.Texture("./assets/textures/materials/wood_cabinet_worn_long_diff_2k.jpg", this.scene);
+            portalMaterial.bumpTexture = new BABYLON.Texture("./assets/textures/materials/wood_cabinet_worn_long_nor_gl_2k.png", this.scene);
+            portalMaterial.metallicTexture = new BABYLON.Texture("./assets/textures/materials/wood_cabinet_worn_long_rough_2k.png", this.scene);
             portalMesh.material = portalMaterial;
             portalMesh.material.roughness = 0.95;
             portalMesh.material.metallic = 0.01;

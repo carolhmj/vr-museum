@@ -11,8 +11,8 @@ export default class Lobby extends Room {
 
         const skyboxSize = 1000;
         const environmentHelper = scene.createDefaultEnvironment({
-            environmentTexture: "../../assets/textures/environments/old_room.env",
-            skyboxTexture: "../../assets/textures/environments/old_room.env",
+            environmentTexture: "./assets/textures/environments/old_room.env",
+            skyboxTexture: "./assets/textures/environments/old_room.env",
             createGround: false
         });
         environmentHelper.skyboxMaterial.primaryColor = new BABYLON.Color3(1,1,1);
@@ -20,9 +20,9 @@ export default class Lobby extends Room {
         var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: skyboxSize, height: skyboxSize}, scene);
         var groundMaterial = new BABYLON.PBRMaterial("groundMaterial", scene);
         ground.material = groundMaterial;
-        groundMaterial.albedoTexture = new BABYLON.Texture("../../assets/textures/materials/kitchen_wood_diff_2k.jpg", scene);
-        groundMaterial.bumpTexture = new BABYLON.Texture("../../assets/textures/materials/kitchen_wood_nor_gl_2k.png", scene);
-        groundMaterial.metallicTexture = new BABYLON.Texture("../../assets/textures/materials/kitchen_wood_rough_2k.png", scene);
+        groundMaterial.albedoTexture = new BABYLON.Texture("./assets/textures/materials/kitchen_wood_diff_2k.jpg", scene);
+        groundMaterial.bumpTexture = new BABYLON.Texture("./assets/textures/materials/kitchen_wood_nor_gl_2k.png", scene);
+        groundMaterial.metallicTexture = new BABYLON.Texture("./assets/textures/materials/kitchen_wood_rough_2k.png", scene);
         groundMaterial.albedoTexture.uScale = 100;
         groundMaterial.albedoTexture.vScale = 100;
         ground.receiveShadows = true;
