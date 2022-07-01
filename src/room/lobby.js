@@ -10,21 +10,27 @@ export default class Lobby extends Room {
         scene.debugLayer.show({});
 
         const skyboxSize = 1000;
+        const roomTexture = "./assets/textures/environments/riverside.env";
         const environmentHelper = scene.createDefaultEnvironment({
-            environmentTexture: "./assets/textures/environments/old_room.env",
-            skyboxTexture: "./assets/textures/environments/old_room.env",
-            createGround: false
+            environmentTexture: roomTexture,
+            skyboxTexture: roomTexture,
+            createGround: false,
+            skyboxSize
         });
         environmentHelper.skyboxMaterial.primaryColor = new BABYLON.Color3(1,1,1);
+        environmentHelper.skybox.position.y = 25;
         
-        var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: skyboxSize, height: skyboxSize}, scene);
+        var ground = BABYLON.MeshBuilder.CreateGround("ground", {
+            width: skyboxSize/4, height: skyboxSize/4}, scene);
         var groundMaterial = new BABYLON.PBRMaterial("groundMaterial", scene);
         ground.material = groundMaterial;
-        groundMaterial.albedoTexture = new BABYLON.Texture("./assets/textures/materials/kitchen_wood_diff_2k.jpg", scene);
-        groundMaterial.bumpTexture = new BABYLON.Texture("./assets/textures/materials/kitchen_wood_nor_gl_2k.png", scene);
-        groundMaterial.metallicTexture = new BABYLON.Texture("./assets/textures/materials/kitchen_wood_rough_2k.png", scene);
+        groundMaterial.albedoTexture = new BABYLON.Texture("./assets/textures/materials/aerial_asphalt_01_diff_2k.jpg", scene);
+        groundMaterial.bumpTexture = new BABYLON.Texture("./assets/textures/materials/aerial_asphalt_01_nor_gl_2k.png", scene);
+        groundMaterial.metallicTexture = new BABYLON.Texture("./assets/textures/materials/aerial_asphalt_01_rough_2k.png", scene);
+        groundMaterial.opacityTexture = new BABYLON.Texture("./assets/textures/materials/WhiteTransparentRamp.png", scene);
         groundMaterial.albedoTexture.uScale = 100;
         groundMaterial.albedoTexture.vScale = 100;
+        groundMaterial.albedoColor = BABYLON.Color3.FromHexString("#ECDEB2");
         ground.receiveShadows = true;
         groundMaterial.roughness = 0.9;
         groundMaterial.metallic = 0.01;
@@ -56,8 +62,11 @@ export default class Lobby extends Room {
             lousaTransform.position.x = 1;
 
             lousaTransform.rotation.y = BABYLON.Tools.ToRadians(-20);
-            console.log('mehs', mesh);
-            //shadowGenerator.addShadowCaster(mesh, true);
+            mesh.getChildren().forEach(child => {
+                if (child instanceof BABYLON.Mesh) {
+                    shadowGenerator.addShadowCaster(child, true);
+                }
+            });
         });
         
         scene.metadata = {
