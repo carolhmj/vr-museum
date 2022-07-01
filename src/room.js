@@ -57,7 +57,7 @@ export default class Room {
         //const portalMesh = BABYLON.MeshBuilder.CreateBox("portal", {width: 3, height: 4, depth: 1}, this.scene);
         
         BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/carolhmj/quick-demos/main/assets/", "door_03.obj", this.scene, (meshes) => {
-            const portalMesh = meshes[0];
+            let portalMesh = meshes[0];
             portalMesh.position = position;
             
             const portalMaterial = new BABYLON.PBRMaterial("portalMaterial", this.scene);
@@ -67,6 +67,11 @@ export default class Room {
             portalMesh.material = portalMaterial;
             portalMesh.material.roughness = 0.95;
             portalMesh.material.metallic = 0.01;
+
+            const bb = BABYLON.BoundingBoxGizmo.MakeNotPickableAndWrapInBoundingBox(portalMesh, this.scene);
+            bb.scaling = new BABYLON.Vector3(2,2,2);
+            portalMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+            portalMesh = bb;
             
             portalMesh.metadata = {connectedRoom};
             this.portalMeshes.push(portalMesh);
