@@ -11,8 +11,8 @@ export default class RoomManager {
         this.engine = engine;
         this.canvas = canvas;
         
-        const lobby = new Lobby(engine, canvas, this);
-        const room1 = new Room1(engine, canvas, this);
+        const lobby = new Lobby(engine, canvas, this, 'Lobby');
+        const room1 = new Room1(engine, canvas, this, 'Test Room');
 
         lobby.addConnection(room1, new BABYLON.Vector3(0, 0, 1));
 

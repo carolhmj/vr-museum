@@ -4,11 +4,12 @@
  */
 
 export default class Room {
-    constructor(engine, canvas, roomManager) {
+    constructor(engine, canvas, roomManager, name = 'Room ABC') {
         this.engine = engine; // Rendering engine
         this.canvas = canvas; // Rendering canvas
         this.roomManager = roomManager; 
         this.scene = this.createScene(this.engine, this.canvas);
+        this.name = name;
         
         this.portalMeshes = []; 
 
@@ -76,6 +77,37 @@ export default class Room {
             if (this.scene.metadata?.shadowGenerator) {
                 this.scene.metadata.shadowGenerator.addShadowCaster(portalMesh);
             }
+
+            BABYLON.SceneLoader.ImportMesh("", "./assets/meshes/", "lousa_new.glb", this.scene, (meshes) => {
+                const root = meshes[0];
+                const transform = new BABYLON.TransformNode("lousa_transf");
+                root.parent = transform;
+                transform.parent = portalMesh;
+                transform.scaling.scaleInPlace(0.5);
+                transform.position.x = 0.5;
+                transform.position.y = -0.5;
+                transform.position.z = 0.1;
+                //transform.rotation.y = BABYLON.Tools.ToRadians(-20);
+
+                const boardPrim = root.getChildMeshes(false, (node) => node.name === 'noticeboard.001')[0];
+                
+                const mat = new BABYLON.StandardMaterial("boardMaterial", this.scene);
+                
+                const boardTex = new BABYLON.DynamicTexture("lousa_dyn", {width: 512, height: 512}, this.scene);
+
+                mat.diffuseTexture = boardTex;
+
+                boardTex.drawText(connectedRoom.name, 20, 256, "72px Arial", "black", "white", false);
+
+                boardPrim.material = mat;
+
+                if (this.scene.metadata?.shadowGenerator) {
+                    root.getChildMeshes().forEach(child => {
+                        this.scene.metadata.shadowGenerator.addShadowCaster(child);
+                    });
+                }
+
+            });
         });
     }
 }

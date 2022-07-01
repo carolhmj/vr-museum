@@ -79,8 +79,8 @@ export default class Lobby extends Room {
             const lousaTransform = new BABYLON.TransformNode("lousaTransform");
             root.parent = lousaTransform;
 
-            lousaTransform.position.z = 5;
-            lousaTransform.position.x = 1;
+            lousaTransform.position.z = 6;
+            lousaTransform.position.x = 1.5;
 
             lousaTransform.rotation.y = BABYLON.Tools.ToRadians(-20);
             mesh.getChildren().forEach(child => {
