@@ -7,7 +7,7 @@ export default class Lobby extends Room {
     createScene(engine, canvas) {
         // This creates a basic Babylon Scene object (non-mesh)
         var scene = new BABYLON.Scene(engine);
-        scene.debugLayer.show({});
+        //scene.debugLayer.show({});
 
         const skyboxSize = 1000;
         const roomTexture = "./assets/textures/environments/riverside.env";
@@ -40,6 +40,10 @@ export default class Lobby extends Room {
         
         // This attaches the camera to the canvas
         camera.attachControl(canvas, true);
+
+        const xr = scene.createDefaultXRExperienceAsync({
+            floorMeshes: [ground]
+        });
         
         // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
         const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0.5, -1, -1), scene);
