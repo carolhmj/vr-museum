@@ -35,7 +35,6 @@ export default class Room {
     preparePortalChecks() {
         this.scene.onBeforeRenderObservable.add(() => {
             for (let portalMesh of this.portalMeshes) {
-                // if (this.boundingMesh.intersectsMesh(portalMesh)) {
                 if (portalMesh.intersectsPoint(this.scene.activeCamera.position)) {
                     // Change active scene
                     console.log('change active scene');
@@ -54,8 +53,6 @@ export default class Room {
      * @param {*} position the position of the portal in the current room
      */
     addConnection(connectedRoom, position) {
-        //const portalMesh = BABYLON.MeshBuilder.CreateBox("portal", {width: 3, height: 4, depth: 1}, this.scene);
-        
         BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/carolhmj/quick-demos/main/assets/", "door_03.obj", this.scene, (meshes) => {
             let portalMesh = meshes[0];
             portalMesh.position = position;

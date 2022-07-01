@@ -9,6 +9,9 @@ export default class Lobby extends Room {
         var scene = new BABYLON.Scene(engine);
         //scene.debugLayer.show({});
 
+        /**
+         * ENVIRONMENT AND SKYBOX
+         */
         const skyboxSize = 1000;
         const roomTexture = "./assets/textures/environments/riverside.env";
         const environmentHelper = scene.createDefaultEnvironment({
@@ -20,6 +23,9 @@ export default class Lobby extends Room {
         environmentHelper.skyboxMaterial.primaryColor = new BABYLON.Color3(1,1,1);
         environmentHelper.skybox.position.y = 25;
         
+        /**
+         * GROUND
+         */
         var ground = BABYLON.MeshBuilder.CreateGround("ground", {
             width: skyboxSize/4, height: skyboxSize/4}, scene);
         var groundMaterial = new BABYLON.PBRMaterial("groundMaterial", scene);
@@ -35,17 +41,25 @@ export default class Lobby extends Room {
         groundMaterial.roughness = 0.9;
         groundMaterial.metallic = 0.01;
         
+        /**
+         * CAMERA
+         */
         var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 1, 10), scene);
         camera.target = new BABYLON.Vector3(0, 1, 0);
         
         // This attaches the camera to the canvas
         camera.attachControl(canvas, true);
 
+        /**
+         * XR EXPERIENCE
+         */
         const xr = scene.createDefaultXRExperienceAsync({
             floorMeshes: [ground]
         });
         
-        // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+        /**
+         * LIGHTNING AND SHADOWS
+         */
         const light = new BABYLON.DirectionalLight("light", new BABYLON.Vector3(0.5, -1, -1), scene);
         light.intensity = 1.0;
         light.autoCalcShadowZBounds = true;
@@ -55,6 +69,9 @@ export default class Lobby extends Room {
         
         const shadowGenerator = new BABYLON.ShadowGenerator(512, light);
 
+        /**
+         * OBJECTS 
+         */
         BABYLON.SceneLoader.ImportMesh("", "./assets/meshes/", "lousa.glb", scene, (meshes) => {
             const root = meshes[0];
             const mesh = root.getChildren()[0];
@@ -72,7 +89,25 @@ export default class Lobby extends Room {
                 }
             });
         });
-        
+
+        BABYLON.SceneLoader.ImportMesh("", "./assets/meshes/", "stone_pillars.glb", scene, (meshes) => {
+            const root = meshes[0];
+            const rootChildren = root.getChildren(null, false);
+            
+            rootChildren[0].scaling.scaleInPlace(0.2);
+            rootChildren[0].position.z += 3;
+
+            rootChildren.forEach(child => {
+                console.log(child);
+                if (child instanceof BABYLON.Mesh) {
+                    shadowGenerator.addShadowCaster(child, true);
+                }
+            });
+        });
+
+        /**
+         * METADATA TO BE USED IN OTHER CLASSES
+         */
         scene.metadata = {
             environmentHelper: environmentHelper,
             shadowGenerator: shadowGenerator
