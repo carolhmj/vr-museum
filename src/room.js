@@ -10,6 +10,8 @@ export default class Room {
         this.roomManager = roomManager; 
         this.scene = this.createScene(this.engine, this.canvas);
         this.name = name;
+
+        this.initialCameraPos = this.scene.activeCamera.position.clone();
         
         this.portalMeshes = []; 
 
@@ -33,13 +35,23 @@ export default class Room {
         boundingMesh.parent = activeCam;
     }
 
+    setAsActiveRoom() {
+        /**
+         * XR EXPERIENCE
+         */
+        this.scene.activeCamera.position = this.initialCameraPos;
+        this.xrExperience = this.scene.createDefaultXRExperienceAsync({});
+        this.roomManager.setActiveRoom(this);
+    }
+
     preparePortalChecks() {
         this.scene.onBeforeRenderObservable.add(() => {
             for (let portalMesh of this.portalMeshes) {
                 if (portalMesh.intersectsPoint(this.scene.activeCamera.position)) {
                     // Change active scene
                     console.log('change active scene');
-                    this.roomManager.setActiveRoom(portalMesh.metadata.connectedRoom);
+                    const connectedRoom = portalMesh.metadata.connectedRoom;
+                    connectedRoom.setAsActiveRoom();
                 }
             }
         });

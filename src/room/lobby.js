@@ -49,13 +49,6 @@ export default class Lobby extends Room {
         
         // This attaches the camera to the canvas
         camera.attachControl(canvas, true);
-
-        /**
-         * XR EXPERIENCE
-         */
-        const xr = scene.createDefaultXRExperienceAsync({
-            floorMeshes: [ground]
-        });
         
         /**
          * LIGHTNING AND SHADOWS

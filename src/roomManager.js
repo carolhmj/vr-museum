@@ -12,11 +12,12 @@ export default class RoomManager {
         this.canvas = canvas;
         
         const lobby = new Lobby(engine, canvas, this, 'Lobby');
-        const room1 = new Room1(engine, canvas, this, 'Test Room');
+        const room1 = new Room1(engine, canvas, this, 'Exp. Rodin');
 
         lobby.addConnection(room1, new BABYLON.Vector3(0, 0, 1));
+        room1.addConnection(lobby, new BABYLON.Vector3(-2, 0, 1));
 
-        this.activeRoom = lobby;
+        lobby.setAsActiveRoom();
     }
 
     setActiveRoom(room) {
